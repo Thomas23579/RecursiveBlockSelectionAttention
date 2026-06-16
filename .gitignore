@@ -10,6 +10,7 @@ DontAddToGit.txt
 models_backup/
 outputs/
 .idea/
+secrets/
 
 # C extensions
 *.so

@@ -77,7 +77,7 @@ Set the branching factor $B$, candidate budget $C$, and scale count $H$ in `loga
 
 The supported context length is $C \cdot B^{\,H-1}$. The default $B=8$, $C=256$, $H=4$ therefore covers a 128k context ($256 \cdot 8^{3} = 131072$ tokens).
 
-Set `model.config.text_config.block_size` to control how many sequence items are processed at once. Larger values create larger temporary tensors and can OOM the VRAM; 256 is a reasonable choice.
+Set `model.config.text_config.block_size` to control how many sequence items are processed at once. Larger values create larger temporary tensors and can OOM the VRAM; 512 is a reasonable choice.
 
 ## Running the opencompass benchmark
 
@@ -90,6 +90,7 @@ python unsafe_replace_opencompass_needlebench.py
 
 ### Run
 
+Linux:
 ```bash
 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True \
   opencompass --datasets needlebench_v2_32k \
@@ -97,6 +98,13 @@ PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True \
     --summarizer needlebench/needlebench_v2_32k_summarizer \
     --work-dir ./outputs/gemma4_31B_needlebench_32k
 ```
+
+Windows:
+```powershell
+$env:PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+opencompass --datasets needlebench_v2_32k --models hf_gemma4_31B_it --summarizer needlebench/needlebench_v2_32k_summarizer --work-dir ./outputs/gemma4_31B_needlebench_32k
+```
+
 
 Results are written to:
 
@@ -113,6 +121,7 @@ For the NeedleBench scores and the latency/memory comparison against dense atten
 * **OOM in general.** Lower `model.config.text_config.block_size` and make sure `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` is set.
 * **`B * (C // B) != C` error.** $C$ must be a multiple of $B$.
 * **`AttributeError: GemmaTokenizer has no attribute batch_encode_plus`.** Apply the opencompass `sed` patch from the installation section.
+* `opencompass` might run into an error while evaluating the benchmark results. However, the summary is still created - no fix necessary.
 
 ## Additional information
 
