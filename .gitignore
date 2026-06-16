@@ -9,6 +9,7 @@ DontAddToGit.txt
 # stuff
 models_backup/
 outputs/
+.idea/
 
 # C extensions
 *.so
