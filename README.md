@@ -125,9 +125,38 @@ For the NeedleBench scores and the latency/memory comparison against dense atten
 
 ## Additional information
 
+### Benchmark Results for Reference
+**Table 1 — Multi-Needle Reasoning (2 hops).** Accuracy (%) over 10 cases per configuration. RBA matches or exceeds dense attention everywhere, and the gap widens as N grows.
+
+| Method | 1k/0 | 1k/50 | 1k/100 | 4k/0 | 4k/50 | 4k/100 | 16k/0 | 16k/50 | 16k/100 | 32k/0 | 32k/50 | 32k/100 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| RBA | 100 | 100 | 100 | 90 | 100 | 100 | 80 | 50 | 100 | 70 | 50 | 100 |
+| Dense Attention | 80 | 80 | 80 | 40 | 50 | 70 | 10 | 0 | 50 | 0 | 0 | 40 |
+
+**Table 2 — Multi-Needle Reasoning (4 hops).** Accuracy (%) over 10 cases per configuration. RBA matches or exceeds dense attention everywhere, but both degrade sharply with N — the hardest task.
+
+| Method | 1k/0 | 1k/50 | 1k/100 | 4k/0 | 4k/50 | 4k/100 | 16k/0 | 16k/50 | 16k/100 | 32k/0 | 32k/50 | 32k/100 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| RBA | 80 | 80 | 80 | 30 | 20 | 70 | 10 | 10 | 40 | 0 | 0 | 70 |
+| Dense Attention | 30 | 30 | 30 | 10 | 20 | 40 | 0 | 0 | 20 | 0 | 0 | 20 |
+
+**Table 3 — Single-Needle Retrieval.** Accuracy (%) over 10 cases per configuration. RBA retrieves near-perfectly throughout; dense attention collapses at mid-depth (50%) for N ≥ 16k.
+
+| Method | 1k/0 | 1k/50 | 1k/100 | 4k/0 | 4k/50 | 4k/100 | 16k/0 | 16k/50 | 16k/100 | 32k/0 | 32k/50 | 32k/100 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| RBA | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 90 | 100 |
+| Dense Attention | 100 | 100 | 100 | 100 | 100 | 100 | 90 | 0 | 90 | 90 | 0 | 80 |
+
+**Table 4 — Multi-Needle Retrieval.** Per-needle success (%) over 25 cases per N; each case holds all 3 needles, columns give the scored needle's depth. Dense attention fails on mid-depth needles for N ≥ 16k where RBA stays accurate; both decline mildly at N = 32k.
+
+| Method | 1k/0 | 1k/50 | 1k/100 | 4k/0 | 4k/50 | 4k/100 | 16k/0 | 16k/50 | 16k/100 | 32k/0 | 32k/50 | 32k/100 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| RBA | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 80 | 100 | 100 | 68 | 88 |
+| Dense Attention | 100 | 100 | 100 | 100 | 88 | 96 | 96 | 12 | 100 | 96 | 12 | 88 |
+
 ### Hardware
 
-Gemma-4 31B-it needs a high-memory GPU. In bf16 the weights alone occupy ~62 GB, so an H100 (80 GB) or H200 is recommended; the KV cache and benchmark context add further memory on top.
+Gemma-4 31B-it needs a high-memory GPU. In bf16 the weights alone occupy ~62 GB, so an H200 is recommended; the KV cache and benchmark context add further memory on top.
 
 ### Model weights
 
