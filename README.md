@@ -169,19 +169,3 @@ huggingface-cli login
 ### License
 
 See the `LICENSE` file. Use of the Gemma-4 weights is additionally governed by Google's Gemma Terms of Use.
-
-## Citation
-
-If you use RBA, please cite:
-
-```bibtex
-@misc{zeiringer2026rba,
-  title         = {{Training-Free $O(N \log N)$ Sparse Attention via Recursive Block Selection}},
-  author        = {Zeiringer, Thomas},
-  year          = {2026},
-  eprint        = {XXXX.XXXXX},
-  archivePrefix = {arXiv},
-  primaryClass  = {cs.LG},
-  url           = {https://arxiv.org/abs/XXXX.XXXXX}
-}
-```
